@@ -1,0 +1,11 @@
+project: savantenvs/zforth
+target: zf_dict_load
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/zf_dict_load/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_zf_dict_load
+    libfuzzer: true
+    timeout: 30
+    env:
+      MFUZZ_COMPAT_LEVEL: '2'
