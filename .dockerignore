@@ -1,0 +1,15 @@
+# .dockerignore for the commit-image build.
+# Goal: bake in the FULL repo (including .git history — the grader uses it), dropping only local
+# build artifacts and editor/OS cruft.
+
+*.o
+*.a
+*.so
+*.dylib
+zforth
+src/linux/*.d
+src/atmega8/*.d
+
+.DS_Store
+*.swp
+*~
