@@ -1,0 +1,20 @@
+# origin: https://app.mayhem.security/mayhemheroes/zforth/zforth/18
+#
+# The ORIGINAL mayhemheroes harness, ported (BACKPORT.md, "Input-interface caveat"). Run 18 fuzzed
+# the real zForth CLI as a blackbox target: it ran "/repo/src/linux/zforth /repo/forth/core.zf"
+# (with DISABLE_SMOKETEST=1) and no libFuzzer,
+# i.e. the test case is the program's STDIN: a terminal session for src/linux/main.c's readline()
+# REPL. Its crashers are only meaningful through that interface, so the replay uses the same one
+# (mayhem/build.sh builds /mayhem/zforth-cli from the upstream sources at this commit).
+#
+# mayhem-lint: ok-image-path — /mayhem/forth/core.zf is upstream's own Forth prelude, READ by the
+# CLI (main.c include()), never written; the original ran the same file from /repo/forth/core.zf.
+project: savantenvs/zforth
+target: zforth-buggy-mhh-run-18
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+cmds:
+  - cmd: /mayhem/zforth-cli /mayhem/forth/core.zf
+    timeout: 30
+    env:
+      DISABLE_SMOKETEST: '1'
